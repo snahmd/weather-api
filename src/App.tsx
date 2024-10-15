@@ -3,36 +3,33 @@ import { Weather } from "./Weather";
 
 function App() {
   const APIkey: string = import.meta.env.VITE_API_KEY;
-  const country: string = "DE" || "AU";
-
   const [weatherData, setWeatherData] = useState<Weather | null>(null);
 
-  const handleClick = (e: any) => {
-    e.preventDefault();
-    let currentCity = e.target.innerText;
-    
+  const handleClick = (city: string, country: string = "DE") => {
+    // e.preventDefault();
+    // let currentCity = e.target.innerText;
+    console.log(`handling click for ${city}, ${country}`);
 
     fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${currentCity},${country}&appid=${APIkey}`
+      `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${APIkey}`
     )
       .then((res) => res.json())
       .then((res) => setWeatherData(res))
       .catch((err) => console.log(err));
   };
 
-  const handleAUClick = (e: any) => {
-    e.preventDefault();
-    let currentCity = e.target.innerText;
-    const country: string = "AU";
+  // const handleAUClick = (e: any) => {
+  //   e.preventDefault();
+  //   let currentCity = e.target.innerText;
+  //   const country: string = "AU";
 
- 
-    fetch(
-      `http://api.openweathermap.org/data/2.5/weather?q=${currentCity},${country}&appid=${APIkey}`
-    )
-      .then((res) => res.json())
-      .then((res) => setWeatherData(res))
-      .catch((err) => console.log(err));
-  };
+  //   fetch(
+  //     `http://api.openweathermap.org/data/2.5/weather?q=${currentCity},${country}&appid=${APIkey}`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((res) => setWeatherData(res))
+  //     .catch((err) => console.log(err));
+  // };
 
   const minusKelvin: number = 273.15;
 
@@ -40,16 +37,28 @@ function App() {
     <div className="flex flex-col gap-4 m-4 justify-center items-center text-center mt-40 ">
       <h1 className="text-slate-300 text-6xl p-2">Weather App</h1>
       <div className="flex gap-4">
-        <button className="border border-white p-2" onClick={handleClick}>
+        <button
+          className="border border-white p-2"
+          onClick={() => handleClick("Hamburg", "DE")}
+        >
           Hamburg
         </button>
-        <button className="border border-white p-2" onClick={handleClick}>
+        <button
+          className="border border-white p-2"
+          onClick={() => handleClick("Berlin", "DE")}
+        >
           Berlin
         </button>
-        <button className="border border-white p-2" onClick={handleClick}>
+        <button
+          className="border border-white p-2"
+          onClick={() => handleClick("Cologne", "DE")}
+        >
           Cologne
         </button>
-        <button className="border border-white p-2" onClick={handleAUClick}>
+        <button
+          className="border border-white p-2"
+          onClick={() => handleClick("Sydney", "AU")}
+        >
           Sydney
         </button>
       </div>
